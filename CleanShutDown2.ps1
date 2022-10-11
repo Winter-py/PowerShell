@@ -19,12 +19,22 @@ Start-Sleep 5
 
 #Add the name of the applications you usually don't close after -Name
 
-$Apps = Get-Process -Name Brave, Discord , Spotify, Origin
 
 #This will go through each process and stop them 
-foreach ($Application in $Apps) {
-    Stop-Process $Apps -Verbose
+foreach ($Application in $list) {
+ Get-Process $Application
 }
+
+if($Application -isnot [System.ServiceProcess.ServiceController])
+   {
+     foreach ($Application in $list) {
+     Stop-Process -Name $Application
+   }
+   }
+   else
+   {
+      Write-Host "Nothing to close"
+   }
 
 Start-Sleep 5 
 
